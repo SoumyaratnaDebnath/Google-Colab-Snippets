@@ -72,8 +72,42 @@ class HistogramMatching:
         target_image = cv2.imread('/content/'+target_filename) 
         matching = self.match_histograms(source_image, target_image)  
         # Download the result
-        result = cv2.cvtColor(matching, cv2.COLOR_BGR2RGB)
-        cv2.imwrite('matched_image_A.jpg', result)
-        cv2.imwrite('matched_image_B.jpg', matching)
-        files.download('matched_image_A.jpg')
-        files.download('matched_image_B.jpg')
+        cv2.imwrite('matched_image.jpg', matching)
+        files.download('matched_image.jpg')
+
+class HistogramMatchingCV2:
+    def hist_match(self, source, template):
+        source_lab = cv2.cvtColor(source, cv2.COLOR_BGR2Lab)
+        template_lab = cv2.cvtColor(template, cv2.COLOR_BGR2Lab)
+        source_hist, _ = np.histogram(source_lab[:, :, 0], bins=256, range=(0, 256))
+        template_hist, _ = np.histogram(template_lab[:, :, 0], bins=256, range=(0, 256))
+        source_cdf = source_hist.cumsum() / source_hist.sum()
+        template_cdf = template_hist.cumsum() / template_hist.sum()
+        lookup_table = np.interp(source_cdf, template_cdf, np.arange(256))
+        matched_l = np.interp(source_lab[:, :, 0], np.arange(256), lookup_table)
+        matched_lab = np.stack((matched_l.astype(np.uint8), source_lab[:, :, 1], source_lab[:, :, 2]), axis=-1)
+        matched_bgr = cv2.cvtColor(matched_lab, cv2.COLOR_Lab2BGR)
+        return matched_bgr
+
+    def perform_histogram_matching(self, dull_image_path, sharp_image_path):
+        dull_image = cv2.imread(dull_image_path)
+        sharp_image = cv2.imread(sharp_image_path)
+        matched_image = self.hist_match(dull_image, sharp_image)
+        return matched_image
+
+    def run(self):
+        # Upload the Source Image
+        print('Upload the low quality image')
+        source = files.upload()
+        source_filename = list(source.keys())[0]
+        print(f'File "{source_filename}" uploaded successfully!')
+
+        # Upload the Target Image
+        print('Upload the high quality image')
+        target = files.upload()
+        target_filename = list(target.keys())[0]
+        print(f'File "{target_filename}" uploaded successfully!')
+
+        result = self.perform_histogram_matching(dull_image_path='/content/'+source_filename, sharp_image_path='/content/'+target_filename)
+        cv2.imwrite('matched_image.png', result)
+        files.download('matched_image.png')
