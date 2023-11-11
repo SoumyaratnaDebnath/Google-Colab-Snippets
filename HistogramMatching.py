@@ -73,5 +73,7 @@ class HistogramMatching:
         matching = self.match_histograms(source_image, target_image)  
         # Download the result
         result = cv2.cvtColor(matching, cv2.COLOR_BGR2RGB)
-        cv2.imwrite('matched_image.jpg', result)
-        files.download('matched_image.jpg')
+        cv2.imwrite('matched_image_A.jpg', result)
+        cv2.imwrite('matched_image_B.jpg', matching)
+        files.download('matched_image_A.jpg')
+        files.download('matched_image_B.jpg')
