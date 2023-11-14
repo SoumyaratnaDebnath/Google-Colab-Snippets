@@ -57,7 +57,7 @@ class HistogramMatching:
             cumulative_histogram = self.calculate_cumulative_histogram(histogram) # calculate the cumulative histogram of the image
             
             plt.subplot(3, len(image_set), i + 1) # display the image
-            plt.imshow(image, cmap='gray')
+            plt.imshow(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), cmap='gray')
             plt.title(image_titles[i], fontsize=10)
             plt.axis('off')
     
