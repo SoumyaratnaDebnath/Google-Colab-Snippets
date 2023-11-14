@@ -39,16 +39,16 @@ class HistogramMatching:
         return matched_image # return the matched image
 
     # performing histogram matching and displaying the images and their histograms
-    def histogram_matching_and_visualization(image, reference_image, visualize=True): 
-        matched_image = match_histograms(image, reference_image) # match the histogram of the image to the histogram of the reference image
+    def histogram_matching_and_visualization(self, image, reference_image, visualize=True): 
+        matched_image = self.match_histograms(image, reference_image) # match the histogram of the image to the histogram of the reference image
         image_set = [image, reference_image, matched_image] 
         image_titles = ['Source Image', 'Target Image', 'Matched Image']
         if visualize:
-            visualize_histograms(image_set, image_titles=image_titles) # display the images and their histograms   
+            self.visualize_histograms(image_set, image_titles=image_titles) # display the images and their histograms   
         return matched_image # return the matched image  
 
     # this function is responsible for displaying the images and their histograms
-    def visualize_histograms(image_set, figsize=(15, 9), image_titles=None):
+    def visualize_histograms(self, image_set, figsize=(15, 9), image_titles=None):
         plt.figure(figsize=figsize) # set the figure size
     
         for i, image in enumerate(image_set): # iterate over all the images
