@@ -38,6 +38,44 @@ class HistogramMatching:
                 matched_image[i, j] = mapping[image[i, j]]
         return matched_image # return the matched image
 
+    # performing histogram matching and displaying the images and their histograms
+    def histogram_matching_and_visualization(image, reference_image, visualize=True): 
+        matched_image = match_histograms(image, reference_image) # match the histogram of the image to the histogram of the reference image
+        image_set = [image, reference_image, matched_image] 
+        image_titles = ['Source Image', 'Target Image', 'Matched Image']
+        if visualize:
+            visualize_histograms(image_set, image_titles=image_titles) # display the images and their histograms   
+        return matched_image # return the matched image  
+
+    # this function is responsible for displaying the images and their histograms
+    def visualize_histograms(image_set, figsize=(15, 9), image_titles=None):
+        plt.figure(figsize=figsize) # set the figure size
+    
+        for i, image in enumerate(image_set): # iterate over all the images
+            histogram = calculate_histogram(image) # calculate the histogram of the image
+            normalized_histogram = calculate_normalized_histogram(image) # calculate the normalized histogram of the image
+            cumulative_histogram = calculate_cumulative_histogram(histogram) # calculate the cumulative histogram of the image
+            
+            plt.subplot(3, len(image_set), i + 1) # display the image
+            plt.imshow(image, cmap='gray')
+            plt.title(image_titles[i], fontsize=10)
+            plt.axis('off')
+    
+            plt.subplot(3, len(image_set), i + 1 + len(image_set)) # display the histogram
+            plt.bar(range(256), normalized_histogram, width=1.0)
+            plt.title('Normalized Histogram ('+image_titles[i]+')', fontsize=8)
+            plt.xlabel('Pixel Value', fontsize=8)
+            plt.ylabel('Frequency', fontsize=8)
+    
+            plt.subplot(3, len(image_set), i + 1 + 2 * len(image_set)) # display the cumulative histogram
+            plt.plot(cumulative_histogram)
+            plt.title('Cumulative Histogram ('+image_titles[i]+')', fontsize=8)
+            plt.xlabel('Pixel Value', fontsize=8)
+            plt.ylabel('Frequency', fontsize=8)
+    
+        plt.tight_layout()
+        plt.show()
+    
     # this function is responsible for matching the histogram of an image to the histogram of a reference image
     def get_mapping(self, image, reference_image, gray_levels=256):
         histogram = self.calculate_histogram(image) # calculate the histogram of the image
