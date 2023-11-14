@@ -55,12 +55,7 @@ class HistogramMatching:
             histogram = self.calculate_histogram(image) # calculate the histogram of the image
             normalized_histogram = self.calculate_normalized_histogram(image) # calculate the normalized histogram of the image
             cumulative_histogram = self.calculate_cumulative_histogram(histogram) # calculate the cumulative histogram of the image
-            
-            plt.subplot(3, len(image_set), i + 1) # display the image
-            plt.imshow(cv2.cvtColor(image, cv2.COLOR_RGB2BGR), cmap='gray')
-            plt.title(image_titles[i], fontsize=10)
-            plt.axis('off')
-    
+                
             plt.subplot(3, len(image_set), i + 1 + len(image_set)) # display the histogram
             plt.bar(range(256), normalized_histogram, width=1.0)
             plt.title('Normalized Histogram ('+image_titles[i]+')', fontsize=8)
