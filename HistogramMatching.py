@@ -108,7 +108,7 @@ class HistogramMatching:
         # Perform Matching    
         source_image = cv2.imread('/content/'+source_filename)
         target_image = cv2.imread('/content/'+target_filename) 
-        matching = self.match_histograms(source_image, target_image)  
+        matching = self.histogram_matching_and_visualization(source_image, target_image)  
         # Download the result
         cv2.imwrite('matched_image.jpg', matching)
         files.download('matched_image.jpg')
