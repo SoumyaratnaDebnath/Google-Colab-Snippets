@@ -52,9 +52,9 @@ class HistogramMatching:
         plt.figure(figsize=figsize) # set the figure size
     
         for i, image in enumerate(image_set): # iterate over all the images
-            histogram = calculate_histogram(image) # calculate the histogram of the image
-            normalized_histogram = calculate_normalized_histogram(image) # calculate the normalized histogram of the image
-            cumulative_histogram = calculate_cumulative_histogram(histogram) # calculate the cumulative histogram of the image
+            histogram = self.calculate_histogram(image) # calculate the histogram of the image
+            normalized_histogram = self.calculate_normalized_histogram(image) # calculate the normalized histogram of the image
+            cumulative_histogram = self.calculate_cumulative_histogram(histogram) # calculate the cumulative histogram of the image
             
             plt.subplot(3, len(image_set), i + 1) # display the image
             plt.imshow(image, cmap='gray')
