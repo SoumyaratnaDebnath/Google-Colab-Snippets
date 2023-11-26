@@ -79,6 +79,7 @@ class SAM:
                 img[m] = color_mask
             return img
             
+        plt.imshow(image)
         plt.imshow(show_anns_color(masks))
         plt.axis('off')
         plt.savefig('segmented_image_color.png', bbox_inches='tight', pad_inches=0, dpi=300)
