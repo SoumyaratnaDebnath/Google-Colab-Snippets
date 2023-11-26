@@ -1,8 +1,5 @@
-!pip install git+https://github.com/facebookresearch/segment-anything.git
+#!pip install git+https://github.com/facebookresearch/segment-anything.git
 import gdown
-url = 'https://drive.google.com/uc?id=1T8hLqIvE-_i4oksmldr5b8G28XvCWxoo'
-output = '/content/'
-gdown.download(url, output, quiet=False)
 import torch
 import torchvision
 import numpy as np
@@ -22,6 +19,9 @@ class SAM:
         device = "cuda"
         self.sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
         self.sam.to(device=device)
+        url = 'https://drive.google.com/uc?id=1T8hLqIvE-_i4oksmldr5b8G28XvCWxoo'
+        output = '/content/'
+        gdown.download(url, output, quiet=False)
 
     def perfrom_segmentation(self, source, pps, pit, sst, resize):
         image = cv2.imread(source)
