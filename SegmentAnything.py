@@ -65,7 +65,6 @@ class SAM:
         files.download('segmented_image.png')
 
     def run(self, points_per_side=50, pred_iou_thresh=0.90, stability_score_thresh=0.90, resize=(True, 256, 256)):
-        print('\n\n===================================================\n')
         print('Upload the image')
         source = files.upload()
         source_filename = list(source.keys())[0]
