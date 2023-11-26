@@ -14,15 +14,15 @@ from google.colab import files
 
 class SAM:
     def __init__(self):
+        url = 'https://drive.google.com/uc?id=1T8hLqIvE-_i4oksmldr5b8G28XvCWxoo'
+        output = '/content/'
+        gdown.download(url, output, quiet=False)
         sam_checkpoint = "sam_vit_h_4b8939.pth"
         model_type = "vit_h"
         device = "cuda"
         self.sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
         self.sam.to(device=device)
-        url = 'https://drive.google.com/uc?id=1T8hLqIvE-_i4oksmldr5b8G28XvCWxoo'
-        output = '/content/'
-        gdown.download(url, output, quiet=False)
-
+        
     def perfrom_segmentation(self, source, pps, pit, sst, resize):
         image = cv2.imread(source)
         mask_generator_ = SamAutomaticMaskGenerator(
