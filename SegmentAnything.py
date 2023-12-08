@@ -14,7 +14,7 @@ from google.colab import files
 
 class SAM:
     def __init__(self):
-        url = 'https://drive.google.com/uc?id=1T8hLqIvE-_i4oksmldr5b8G28XvCWxoo'
+        url = 'https://drive.google.com/file/d/1RwFtZCE7Rq94A3nExQemYIUwGB-U0i7i/view?usp=sharing'
         output = '/content/'
         gdown.download(url, output, quiet=False)
         sam_checkpoint = "sam_vit_h_4b8939.pth"
